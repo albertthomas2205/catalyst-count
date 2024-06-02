@@ -160,19 +160,19 @@ USE_I18N = True
 USE_TZ = True
 
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
 
-#         'SCOPE': [
-#             'profile',
-#             'email',
-#         ],
-#         'AUTH_PARAMS': {
-#             'access_type': 'online',
-#         },
-#         'OAUTH_PKCE_ENABLED': True,
-#     }
-# }
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
