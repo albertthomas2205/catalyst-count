@@ -160,23 +160,19 @@ USE_I18N = True
 USE_TZ = True
 
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        # 'APP': {
-        #     'client_id': '703415665855-uoe02ppob84eg22071laqii057qplu9e.apps.googleusercontent.com',
-        #     'secret': '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',
-        #     'key': ''
-        # },
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'OAUTH_PKCE_ENABLED': True,
+#     }
+# }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
