@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Count</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Filter Companies</h1>
+        <form id="filter-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="industry">Industry</label>
+                <select name="industry" id="industry" class="form-control">
+                    <option value="">-- Select Industry --</option>
+                    {% for industry in industries %}
+                        <option value="{{ industry.industry }}">{{ industry.industry }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="size_range">Size Range</label>
+                <select name="size_range" id="size_range" class="form-control">
+                    <option value="">-- Select Size Range --</option>
+                    {% for size_range in size_ranges %}
+                        <option value="{{ size_range.size_range }}">{{ size_range.size_range }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="locality">Locality</label>
+                <select name="locality" id="locality" class="form-control">
+                    <option value="">-- Select Locality --</option>
+                    {% for locality in localities %}
+                        <option value="{{ locality.locality }}">{{ locality.locality }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select name="country" id="country" class="form-control">
+                    <option value="">-- Select Country --</option>
+                    {% for country in countries %}
+                        <option value="{{ country.country }}">{{ country.country }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+
+        <h2>Total Companies: <span id="company-count">0</span></h2>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#filter-form').on('submit', function(event) {
+                event.preventDefault();
+                fetchCompanyCount();
+            });
+
+            function fetchCompanyCount() {
+                const formData = $('#filter-form').serialize();
+                $.ajax({
+                    url: '/api/companies/count/',
+                    data: formData,
+                    success: function(data) {
+                        $('#company-count').text(data.count);
+                    },
+                    error: function(error) {
+                        console.log("Error fetching company count:", error);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
