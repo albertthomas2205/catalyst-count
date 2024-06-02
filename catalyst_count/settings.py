@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+# Create an Env object
+env = environ.Env()
+
+# Load environment variables from the .env file
+environ.Env.read_env()
+
+# Read the value of the DB_PASSWORD environment variable
+db_password = env('DB_PASSWORD')
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +32,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-om$t7jdc^g3eh-!5xm1e4#lhbrm8r4svo@-!3fdelsj2_(un03'
+print(env('SECRET'))
+
+SECRET_KEY = env('SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -100,13 +114,15 @@ WSGI_APPLICATION = 'catalyst_count.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# db_password = environ.Env('DB_PASSWORD')
+# print('haii',db_password)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'catalyst_db',
         'USER': 'catalyst_user',
-        'PASSWORD': 'your_password',
+        'PASSWORD': db_password,
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -173,8 +189,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# client_id ='703415665855-uoe02ppob84eg22071laqii057qplu9e.apps.googleusercontent.com'
-# client_secret = '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'
 
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
