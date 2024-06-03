@@ -4,7 +4,7 @@ from .views import CompanyViewSet
 from .views import company_list_view,CompanyCountView
 
 router = DefaultRouter()
-router.register(r'companies', CompanyViewSet)
+# router.register(r'companies', CompanyViewSet)
 
 urlpatterns = [
  

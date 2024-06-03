@@ -14,13 +14,30 @@ class CompanyViewSet(viewsets.ModelViewSet):
    
     
 from django.shortcuts import render
-from .forms import CompanyFilterForm
+
+
+from django.core.cache import cache
 
 def company_list_view(request):
-    distinct_industries = Company.objects.values('industry').distinct()[:10]
-    distinct_localities = Company.objects.values('locality').distinct()[:10]
-    distinct_size_ranges = Company.objects.values('size_range').distinct()[:10]
-    distinct_countries = Company.objects.values('country').distinct()[:10]
+    distinct_industries = cache.get('distinct_industries')
+    if not distinct_industries:
+        distinct_industries = list(Company.objects.values('industry').distinct()[:10])
+        cache.set('distinct_industries', distinct_industries, 60 * 60)  # Cache for 1 hour
+
+    distinct_localities = cache.get('distinct_localities')
+    if not distinct_localities:
+        distinct_localities = list(Company.objects.values('locality').distinct()[:10])
+        cache.set('distinct_localities', distinct_localities, 60 * 60)
+
+    distinct_size_ranges = cache.get('distinct_size_ranges')
+    if not distinct_size_ranges:
+        distinct_size_ranges = list(Company.objects.values('size_range').distinct()[:10])
+        cache.set('distinct_size_ranges', distinct_size_ranges, 60 * 60)
+
+    distinct_countries = cache.get('distinct_countries')
+    if not distinct_countries:
+        distinct_countries = list(Company.objects.values('country').distinct()[:10])
+        cache.set('distinct_countries', distinct_countries, 60 * 60)
 
     context = {
         "industries": distinct_industries,
@@ -30,6 +47,7 @@ def company_list_view(request):
     }
     
     return render(request, 'account/company_list.html', context)
+
 
 
 from rest_framework.views import APIView
@@ -59,4 +77,6 @@ class CompanyCountView(APIView):
             queryset = Company.objects.none()  # Return an empty queryset if filters are invalid
 
         count = queryset.count()
+       
+        
         return Response({'count': count})

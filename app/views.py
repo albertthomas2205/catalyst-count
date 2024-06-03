@@ -12,6 +12,10 @@ from .forms import UploadFileForm
 def user_list(request):
     users = User.objects.all()
     return render(request, 'account/users.html', {'users': users})
+def home (request):
+    users = User.objects.all()
+    return render(request, 'account/users.html', {'users': users})
+
 
 
 
@@ -33,14 +37,12 @@ def upload_file(request):
 
                 companies = []
                 for _, row in chunk.iterrows():
-                    year_founded = row['year founded']
                     current_employee_estimate = row.get('current employee estimate')
                     total_employee_estimate = row.get('total employee estimate')
 
                     companies.append(Company(
                         name=row['name'],
                         domain=row['domain'],
-                        # year_founded=int(year_founded) if year_founded is not None else None,
                         industry=row['industry'],
                         size_range=row['size range'],
                         locality=row['locality'],
@@ -95,3 +97,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     filterset_fields = ['industry', 'size_range', 'locality', 'country']
 
 from .forms import CompanyFilterForm
+
+def index(request):
+    print('haiiill')
+    return render(request,'account/login.html')

@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.views.generic import TemplateView
+from app.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/',include('app.urls')),
+    path('',include('app.urls')),
     path('',include('api.urls')),
-    path('home/',TemplateView.as_view(template_name='dashboard/home.html'),name='home'),
+    path('home/', home, name='home'),
+    # path('home/',TemplateView.as_view(template_name='dashboard/home.html'),name='home'),
     path('accounts/', include('allauth.urls')),
 ]

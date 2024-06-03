@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+ 
     
     'allauth',
     'allauth.account',
@@ -68,6 +69,9 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.github',
 ]
 
+ACCOUNT_EMAIL_REQUIRED= True
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 
 
@@ -196,10 +200,10 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
-
+LOGOUT_REDIRECT_URL = '/accounts/login'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# ACCOUNT_EMAIL_REQUIRED = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 REST_FRAMEWORK = {
